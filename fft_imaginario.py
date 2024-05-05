@@ -1,7 +1,16 @@
 import numpy as np
+import matplotlib.pyplot as plt
+import time
 
 
 def FFT(P):
+    """
+        Calcula la transformada rapida de Fourier de manera
+        recursiva y usando el concepto de matriz de Vandermont en
+        imaginarios para un polinomio P
+        :param P: Lista de coeficientes del polinomio
+        :return: Lista de coeficientes de la transformada de Fourier del polinomio
+    """
     n = len(P)
     if n == 1:
         return P
@@ -21,6 +30,12 @@ def FFT(P):
 
 
 def IFFT(P):
+    """
+        Calcula la transformada rapida de Fourier inversa de un polinomio P
+        usando el concepto de matriz de Vandermont en imaginarios
+        :param P: Lista de coeficientes de la transformada de Fourier del polinomio
+        :return: Lista de coeficientes del polinomio resultado original
+    """
     n = len(P)
     if n == 1:
         return P
@@ -40,6 +55,12 @@ def IFFT(P):
 
 
 def multiplicar_polinomios(A, B):
+    """
+        Multiplica dos polinomios A y B utilizando la Transformada Rapida de Fourier (FFT).
+        :param A: Lista de coeficientes del primer polinomio
+        :param B: Lista de coeficientes del segundo polinomio
+        :return: Lista de coeficientes del polinomio resultado de la multiplicacion
+    """
     m = len(A)
     n = len(B)
     k = 2 ** (int(np.log2(m + n - 1)) + 1)
@@ -58,12 +79,28 @@ def multiplicar_polinomios(A, B):
 
 
 def main():
-    A = [1, 2, 3]  # A(x) = 1 + 2x + 3x^2
-    B = [4, 5, 6]  # B(x) = 4 + 5x + 6x^2
 
-    C = multiplicar_polinomios(A, B)  # C(x) = A(x) * B(x)
+    tiempos = []
+    tamagnos = [2**i for i in range(1, 11)]
 
-    print(C)
+    for tamn in tamagnos:
+        A = [np.random.rand() for _ in range(tamn)]
+        B = [np.random.rand() for _ in range(tamn)]
+
+        inicio = time.perf_counter()
+        C = multiplicar_polinomios(A, B)
+        fin = time.perf_counter()
+
+        tiempos.append(fin - inicio)
+
+    plt.plot(tamagnos, tiempos, marker='o')
+    plt.xlabel('Tamaño del polinomio')
+    plt.ylabel('Tiempo de ejecucion (s)')
+    plt.title('Tiempo de ejecucion para FFT con imaginarios')
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.show()
 
 
-main()
+if __name__ == '__main__':
+    main()
