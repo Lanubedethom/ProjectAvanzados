@@ -77,6 +77,12 @@ def multiplicar_polinomios(A, B):
 
     return C
 
+def appFFT_Imaginario(A, B):
+    inicio = time.perf_counter()
+    C = multiplicar_polinomios(A, B)
+    fin = time.perf_counter()
+    TiempoMS = (float(fin) - float(inicio))*1000
+    return TiempoMS, C
 
 def main():
 
