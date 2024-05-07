@@ -50,7 +50,7 @@ def click_funcion1(e_texto, texto_var, label1_var):
     label1_var.set("Cargado...")
     texto_var.set("")
     i = 0
-    print(Fun1)
+    #print(Fun1)
 
 def click_funcion2(e_texto, texto_var, label2_var):
     global i, Fun2
@@ -62,38 +62,34 @@ def click_funcion2(e_texto, texto_var, label2_var):
     label2_var.set("Cargado...")
     texto_var.set("")
     i = 0
-    print(Fun2)
+    #print(Fun2)
 
 def Calcular(Lagrange_v, Iterativo_v, VandermondeI_v, VandermondeR_v):
     global Fun1, Fun2
     Resp = ""
     # Tiempos = []
-    Tiempos = [[],[],[],[]] #jepc
+    Tiempos = [0, 0, 0, 0] #jepc
     Respuestas = []
-    if (Lagrange_v):
+    if (Lagrange_v.get()):
         TiempoMS, RespuestaL = appFFT_Lagrange(Fun1, Fun2)
         #Tiempos.append(TiempoMS)
-        Tiempos[0].append(TiempoMS) #jepc
+        Tiempos[0] = TiempoMS #jepc
         Respuestas.append(RespuestaL)
-    if (Iterativo_v):
+    if (Iterativo_v.get()):
         TiempoMS, RespuestaI = appFFT_Iterativo(Fun1, Fun2)
         #Tiempos.append(TiempoMS)
-        Tiempos[1].append(TiempoMS) #jepc
+        Tiempos[1] = TiempoMS #jepc
         Respuestas.append(RespuestaI)
-    if (VandermondeI_v):
+    if (VandermondeI_v.get()):
         TiempoMS, RespuestaVI = appFFT_Imaginario(Fun1, Fun2)
        # Tiempos.append(TiempoMS)
-        Tiempos[2].append(TiempoMS) #jepc
+        Tiempos[2] = TiempoMS #jepc
         Respuestas.append(RespuestaVI)
-    if (VandermondeR_v):
+    if (VandermondeR_v.get()):
         TiempoMS, RespuestaVR = appFFT_Reales(Fun1, Fun2)
        # Tiempos.append(TiempoMS)
-        Tiempos[3].append(TiempoMS) #jepc
+        Tiempos[3] = TiempoMS #jepc
         Respuestas.append(RespuestaVR)
-
-    tamP =  len(Fun1) - 1 if len(Fun1) >= len(Fun2) else len(Fun2) -1
-    print(bool(Lagrange_v))
-    FC_Graficar(Lagrange_v,VandermondeR_v,VandermondeI_v,Iterativo_v,tamP,Tiempos,Respuestas)
 
     Aux = Respuestas[0]
     Respuesta = [str(k) if (k < 0) else "+"+str(k) for k in Aux]
@@ -115,6 +111,10 @@ def Calcular(Lagrange_v, Iterativo_v, VandermondeI_v, VandermondeR_v):
             Resp += "X "
     texto_respuesta.delete("1.0", "end")
     texto_respuesta.insert("1.0", Resp)
+
+    tamP =  len(Fun1) - 1 if len(Fun1) >= len(Fun2) else len(Fun2) -1
+    #print(bool(Lagrange_v))
+    FC_Graficar(Lagrange_v,VandermondeR_v,VandermondeI_v,Iterativo_v,tamP,Tiempos)
 
 
 def click_borrarTodo():
