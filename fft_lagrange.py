@@ -29,10 +29,9 @@ def interpolacion_lagrange(x, y):
         for j in range(n):
             if j != k:
                 L = np.convolve(L, np.array([-x[j], 1]), mode='full')
-                L = L / (x[k] - x[j])
-
+                if (x[k] - x[j] > 1e-9):
+                    L = L / (x[k] - x[j])
         P = np.add(P, L)
-
     return P
 
 def multiplicar_polinomios(A, B):
@@ -55,10 +54,16 @@ def multiplicar_polinomios(A, B):
     # Interpolar para obtener los coeficientes del polinomio resultante
     return C
 
+def appFFT_Lagrange(A, B):
+    inicio = time.perf_counter()
+    C = multiplicar_polinomios(A, B)
+    fin = time.perf_counter()
+    tiempoMS = (float(fin) - float(inicio))*1000
+    return tiempoMS, C
+
 def main():
     tiempos = []
     tamagnos = [2**i for i in range(1, 11)]
-
     for tamn in tamagnos:
         A = [np.random.rand() for _ in range(tamn)]
         B = [np.random.rand() for _ in range(tamn)]
@@ -68,10 +73,9 @@ def main():
         fin = time.perf_counter()
 
         tiempos.append(fin - inicio)
-
-    return tiempos, tamagnos
+        print("Tiempo: ", tiempos)
+        print("Respuesta: ", C)
+    #return tiempos, tamagnos
 
 if __name__ == '__main__':
     main()
-
-

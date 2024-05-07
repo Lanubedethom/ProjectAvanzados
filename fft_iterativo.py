@@ -99,9 +99,17 @@ def multiplicar_polinomios(A, B):
 
     return C
 
+# Módulo que es llamado por otros programas
+def appFFT_Iterativo(A, B):
+    # ------ INICIO de medicion de tiempo
+    inicio = time.perf_counter()
+    C = multiplicar_polinomios(A, B)
+    fin = time.perf_counter()
+    # ------ FIN
+    TiempoMS = (float(fin) - float(inicio))*1000
+    return TiempoMS, C
 
 def main():
-
     # para registrar los tiempos de ejecucion para diferentes tamaños de polinomios
     tiempos = []
     tamagnos = [2**i for i in range(1, 11)]
