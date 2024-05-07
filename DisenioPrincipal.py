@@ -4,7 +4,10 @@ from fft_imaginario import *
 from fft_iterativo import *
 from fft_lagrange import *
 from fft_reales import *
+#JEPC -----------------------------------------------------------------------------------------
 
+from JEPC.Graficos import *
+# ---------------------------------------------------------------------------------------------
 # Varibles globales
 i = 0
 Fun1 = []
@@ -64,24 +67,34 @@ def click_funcion2(e_texto, texto_var, label2_var):
 def Calcular(Lagrange_v, Iterativo_v, VandermondeI_v, VandermondeR_v):
     global Fun1, Fun2
     Resp = ""
-    Tiempos = []
+    # Tiempos = []
+    Tiempos = [[],[],[],[]] #jepc
     Respuestas = []
     if (Lagrange_v):
         TiempoMS, RespuestaL = appFFT_Lagrange(Fun1, Fun2)
-        Tiempos.append(TiempoMS)
+        #Tiempos.append(TiempoMS)
+        Tiempos[0].append(TiempoMS) #jepc
         Respuestas.append(RespuestaL)
     if (Iterativo_v):
         TiempoMS, RespuestaI = appFFT_Iterativo(Fun1, Fun2)
-        Tiempos.append(TiempoMS)
+        #Tiempos.append(TiempoMS)
+        Tiempos[1].append(TiempoMS) #jepc
         Respuestas.append(RespuestaI)
     if (VandermondeI_v):
         TiempoMS, RespuestaVI = appFFT_Imaginario(Fun1, Fun2)
-        Tiempos.append(TiempoMS)
+       # Tiempos.append(TiempoMS)
+        Tiempos[2].append(TiempoMS) #jepc
         Respuestas.append(RespuestaVI)
     if (VandermondeR_v):
         TiempoMS, RespuestaVR = appFFT_Reales(Fun1, Fun2)
-        Tiempos.append(TiempoMS)
+       # Tiempos.append(TiempoMS)
+        Tiempos[3].append(TiempoMS) #jepc
         Respuestas.append(RespuestaVR)
+
+    tamP =  len(Fun1) - 1 if len(Fun1) >= len(Fun2) else len(Fun2) -1
+    print(bool(Lagrange_v))
+    FC_Graficar(Lagrange_v,VandermondeR_v,VandermondeI_v,Iterativo_v,tamP,Tiempos,Respuestas)
+
     Aux = Respuestas[0]
     Respuesta = [str(k) if (k < 0) else "+"+str(k) for k in Aux]
     for k in range(0, len(Respuesta)):
@@ -102,6 +115,7 @@ def Calcular(Lagrange_v, Iterativo_v, VandermondeI_v, VandermondeR_v):
             Resp += "X "
     texto_respuesta.delete("1.0", "end")
     texto_respuesta.insert("1.0", Resp)
+
 
 def click_borrarTodo():
     label1_var.set("")
