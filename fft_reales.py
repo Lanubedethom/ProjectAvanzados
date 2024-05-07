@@ -1,4 +1,5 @@
 import numpy as np
+import time
 
 def FFT(P):
     n = len(P)
@@ -56,6 +57,14 @@ def multiplicar_polinomios(A, B):
     C = [int(round(val)) for val in yc[:m+n-1]]
 
     return C
+
+# Programa que es llamado por otros modulos, para ejecutarse
+def appFFT_Reales(A, B):
+    inicio = time.perf_counter()
+    C = multiplicar_polinomios(A, B)
+    fin = time.perf_counter()
+    TiempoMS = (float(fin) - float(inicio))*1000
+    return TiempoMS, C
 
 def main():
     A = [5, 10, 15] 
