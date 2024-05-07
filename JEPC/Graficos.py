@@ -82,17 +82,17 @@ def FC_GraficarPruebaEstres(langrange, vandermonderR, vandermonderI,iterativo, t
     # Mostrar el gráfico
     plt.show()
     
-def FC_Graficar(Lagrange_v,VandermondeR_v,VandermondeI_v,Iterativo_v, tamanioPolinomio = 0,times = [],respuestas = []):
-  
+def FC_Graficar(Lagrange_v,VandermondeR_v,VandermondeI_v,Iterativo_v, tamanioPolinomio = 0,times = []):
+    
     # Crear el gráfico de dispersión con puntos de diferentes colores
-    if(Lagrange_v):
+    if(Lagrange_v.get()):
         plt.scatter( tamanioPolinomio,times[0], color='red', label='FFT: Multiplicadores de Lagrange', marker='o',s=20)
-    if(VandermondeR_v):
-        plt.scatter( tamanioPolinomio,times[1], color='blue', label='FFT: Vandemonde en Reales', marker='o',s=20)
-    if(VandermondeI_v):
+    if(VandermondeR_v.get()):
+        plt.scatter( tamanioPolinomio,times[3], color='blue', label='FFT: Vandemonde en Reales', marker='o',s=20)
+    if(VandermondeI_v.get()):
         plt.scatter( tamanioPolinomio,times[2], color='green', label='FFT: Vandemonde en Imaginarios', marker='o',s=20)
-    if(Iterativo_v):
-        plt.scatter( tamanioPolinomio,times[3], color='black', label='FFT: Iterativo con bit reverso', marker='o',s=20)
+    if(Iterativo_v.get()):
+        plt.scatter( tamanioPolinomio,times[1], color='black', label='FFT: Iterativo con bit reverso', marker='o',s=20)
 
     # Agregar etiquetas y título
     plt.xlabel('Tamaño de polinomio')
