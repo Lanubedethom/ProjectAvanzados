@@ -1,7 +1,25 @@
+"""
+dijkstra.py
+
+Autores:
+Ian Logan Will Quispe Ventura 211359
+Jhon Esau Pumachoque Choquenaira 210940
+Ciro Gabriel Callapi˜na Castilla 134403
+Luis Manuel Tinoco Ccoto 204807
+Jorge Enrique Zegarra Rojas 161534
+
+"""
+
 import sys
 
 
 class Vertex:
+    """
+    Clase que representa un vertice en un grafo.
+    Key: int, La clave unica que identifica al vertice.
+    D: int, La distancia minima desde el vertice de origen en el algoritmo de Dijkstra.
+    Pi: Vertex, El vertice predecesor en el camino mas corto desde el vertice de origen.
+    """
     def __init__(self, key):
         self.key = key
         self.d = sys.maxsize
@@ -9,6 +27,13 @@ class Vertex:
 
 
 class Edge:
+    """
+    Clase que representa una arista en un grafo.
+    src: Vertex, El vertice de origen de la arista.
+    dest: Vertex, El vertice de destino de la arista.
+    weight: int, El peso de la arista.
+    """
+
     def __init__(self, src, dest, weight):
         self.src = src
         self.dest = dest
@@ -36,6 +61,12 @@ class Graph:
 
 
 def initialize_single_source(graph, source):
+    """
+      Inicializa las distancias y predecesores de los vertices para el algoritmo de Dijkstra.
+      :param graph: El grafo en el que se va a ejecutar el algoritmo.
+      :param source: El vertice de origen.
+    """
+
     for v in graph.vertices:
         v.d = sys.maxsize
         v.pi = None
@@ -43,12 +74,25 @@ def initialize_single_source(graph, source):
 
 
 def relax(u, v, weight):
+    """
+        Relaja una arista en el algoritmo de Dijkstra.
+        :param u: El vertice de origen de la arista.
+        :param v: El vertice de destino de la arista.
+        :param weight: El peso de la arista.
+    """
+
     if v.d > u.d + weight:
         v.d = u.d + weight
         v.pi = u
 
 
 def dijkstra(graph, source):
+    """
+     Ejecuta el algoritmo de Dijkstra en un grafo.
+     :param graph: El grafo en el que se va a ejecutar el algoritmo.
+     :param source: El vertice de origen.
+    """
+
     initialize_single_source(graph, source)
     q = [(v.d, v) for v in graph.vertices]
     q = sorted(q, key=lambda x: x[0])

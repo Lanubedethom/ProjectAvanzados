@@ -1,9 +1,23 @@
-import sys
+"""
+interfaz_dijkstra.py
+
+Autores:
+Ian Logan Will Quispe Ventura 211359
+Jhon Esau Pumachoque Choquenaira 210940
+Ciro Gabriel Callapi˜na Castilla 134403
+Luis Manuel Tinoco Ccoto 204807
+Jorge Enrique Zegarra Rojas 161534
+
+"""
+
 from tkinter import *
 from dijkstra import *
 
 
 class App:
+    """
+      Clase que representa la interfaz de usuario para el algoritmo de Dijkstra.
+    """
     def __init__(self, root):
         self.entries = None
         self.root = root
